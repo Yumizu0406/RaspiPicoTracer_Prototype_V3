@@ -7,9 +7,10 @@
 #include "driver/adchange.h"
 #include "application/control.h"
 
-const uint DISP_LED_0_BIT_PIN = 8;
-const uint DISP_LED_1_BIT_PIN = 9;
-const uint DISP_LED_2_BIT_PIN = 10;
+const uint DISP_LED_1_BIT_PIN = 8;
+const uint DISP_LED_2_BIT_PIN = 9;
+const uint DISP_LED_3_BIT_PIN = 10;
+const uint DISP_LED_4_BIT_PIN = 11;
 
 typedef enum{
     selecting_menu = 0,
@@ -25,7 +26,7 @@ void menu_no_4(void);
 void menu_no_5(void);
 void menu_no_6(void);
 void menu_no_7(void);
-void disp_led(uint8_t value);
+void disp_led_uint8(uint8_t value);
 void exe_select_func(uint8_t select_func);
 
 static uint8_t now_led_disp_value;
@@ -62,7 +63,7 @@ int main()
                     menu_no = 0;
                 }
             }
-            disp_led(menu_no);
+            disp_led_uint8(menu_no);
 
             if(isSwStatus(SW_EXE, click)){
                 menu_status = exe_menu;
@@ -75,12 +76,14 @@ int main()
 }
 
 void init_driver(void){
-    gpio_init(DISP_LED_0_BIT_PIN);
-    gpio_set_dir(DISP_LED_0_BIT_PIN, GPIO_OUT);
     gpio_init(DISP_LED_1_BIT_PIN);
     gpio_set_dir(DISP_LED_1_BIT_PIN, GPIO_OUT);
     gpio_init(DISP_LED_2_BIT_PIN);
     gpio_set_dir(DISP_LED_2_BIT_PIN, GPIO_OUT);
+    gpio_init(DISP_LED_3_BIT_PIN);
+    gpio_set_dir(DISP_LED_3_BIT_PIN, GPIO_OUT);
+    gpio_init(DISP_LED_4_BIT_PIN);
+    gpio_set_dir(DISP_LED_4_BIT_PIN, GPIO_OUT);
 
     init_TB6612FNG();
     init_sw();
@@ -134,48 +137,24 @@ void menu_no_7(void){
     }
 }
 
-void disp_led(uint8_t value){
+void disp_led_uint8(uint8_t value){
+    const uint DISP_LED_ARRAY[4] = {DISP_LED_1_BIT_PIN, DISP_LED_2_BIT_PIN, DISP_LED_3_BIT_PIN, DISP_LED_4_BIT_PIN};
     uint8_t tmp_value;
-    tmp_value = value & 0x07;
+    uint8_t bit_count;
+    tmp_value = value & 0x0f;
 
     if(now_led_disp_value == value){
         return;
     }
-
     now_led_disp_value = value;
 
-    if(value == 0){
-        gpio_put(DISP_LED_0_BIT_PIN, 1);
-        gpio_put(DISP_LED_1_BIT_PIN, 1);
-        gpio_put(DISP_LED_2_BIT_PIN, 1);
-    } else if(value == 1){
-        gpio_put(DISP_LED_0_BIT_PIN, 0);
-        gpio_put(DISP_LED_1_BIT_PIN, 1);
-        gpio_put(DISP_LED_2_BIT_PIN, 1);
-    } else if(value == 2){
-        gpio_put(DISP_LED_0_BIT_PIN, 1);
-        gpio_put(DISP_LED_1_BIT_PIN, 0);
-        gpio_put(DISP_LED_2_BIT_PIN, 1);
-    } else if(value == 3){
-        gpio_put(DISP_LED_0_BIT_PIN, 0);
-        gpio_put(DISP_LED_1_BIT_PIN, 0);
-        gpio_put(DISP_LED_2_BIT_PIN, 1);
-    } else if(value == 4){
-        gpio_put(DISP_LED_0_BIT_PIN, 1);
-        gpio_put(DISP_LED_1_BIT_PIN, 1);
-        gpio_put(DISP_LED_2_BIT_PIN, 0);
-    } else if(value == 5){
-        gpio_put(DISP_LED_0_BIT_PIN, 0);
-        gpio_put(DISP_LED_1_BIT_PIN, 1);
-        gpio_put(DISP_LED_2_BIT_PIN, 0);
-    } else if(value == 6){
-        gpio_put(DISP_LED_0_BIT_PIN, 1);
-        gpio_put(DISP_LED_1_BIT_PIN, 0);
-        gpio_put(DISP_LED_2_BIT_PIN, 0);
-    } else if(value == 7){
-        gpio_put(DISP_LED_0_BIT_PIN, 0);
-        gpio_put(DISP_LED_1_BIT_PIN, 0);
-        gpio_put(DISP_LED_2_BIT_PIN, 0);
+    for(bit_count = 0; bit_count < 4; bit_count++){
+        if((tmp_value & 0x01) != 0x00){
+            gpio_put(DISP_LED_ARRAY[bit_count], false);
+        } else {
+            gpio_put(DISP_LED_ARRAY[bit_count], true);
+        }
+        tmp_value = tmp_value >> 1;
     }
 }
 
