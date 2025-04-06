@@ -5,7 +5,6 @@
 #include "driver/lineSensor.h"
 #include "driver/adchange.h"
 #include "driver/TB6612FNG.h"
-//#include "application/dc_motor.h"
 #include "application/control.h"
 
 const uint DISP_LED_1_BIT_PIN = 8;
@@ -86,7 +85,6 @@ void init_driver(void){
     gpio_init(DISP_LED_4_BIT_PIN);
     gpio_set_dir(DISP_LED_4_BIT_PIN, GPIO_OUT);
 
-//    init_dc_motor();
     init_TB6612FNG();
     init_sw();
     init_lineSensor();
@@ -111,10 +109,7 @@ void menu_no_2(void){
 
 void menu_no_3(void){
     if(isSwStatus(SW_EXE, click)){
-        set_control(A,CW);
-        set_control(B,CW);
-        set_pwm_value(A,1000);
-        set_pwm_value(B,1000);
+    
     }
 }
 

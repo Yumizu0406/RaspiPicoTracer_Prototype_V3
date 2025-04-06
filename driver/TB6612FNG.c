@@ -60,7 +60,7 @@ void init_TB6612FNG(void){
 	gpio_put(AIN2, 1);
 	gpio_put(BIN1, 1);
 	gpio_put(BIN2, 1);
-	gpio_put(EN, 0);
+	gpio_put(EN, 1);
 }
 
 void set_pwm_value(TB6612FNG_CH ch, uint16_t value){

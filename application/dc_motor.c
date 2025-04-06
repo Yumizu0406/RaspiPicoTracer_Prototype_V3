@@ -4,9 +4,6 @@
 #define SHORT_MAX 65535
 
 void init_dc_motor(void){
-	//init_TB6612FNG();
-
-	init_TB6612FNG();
 }
 
 void set_speed_dc_motor(DC_MOTOR_CH ch, int32_t speed){
