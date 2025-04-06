@@ -21,23 +21,27 @@
 #define PIN_LOW		0
 #define PIN_HIGH	1
 
-#define WRAP_SETTING_VALUE 2399//タイマ周期設定値 30kHz
+//Raspberry Pi Pico 2 System Clock 150MHz
+#define WRAP_SETTING_VALUE 4999//タイマ周期設定値 30kHz
+
+static uint slice_num;
 
 static TB6612FNG_CONTROL control_state_A;
+static uint16_t value_A;
 static TB6612FNG_CONTROL control_state_B;
+static uint16_t value_B;
 
 void init_TB6612FNG(void){
 	gpio_set_function(PWM_A, GPIO_FUNC_PWM);
     gpio_set_function(PWM_B, GPIO_FUNC_PWM);
-
-	uint slice_num = pwm_gpio_to_slice_num(2);
+	slice_num = pwm_gpio_to_slice_num(0);
 
     // Set period of 4 cycles (0 to 3 inclusive)
     pwm_set_wrap(slice_num, WRAP_SETTING_VALUE);
     // Set channel A output high for one cycle before dropping
-    pwm_set_chan_level(slice_num, PWM_CHAN_A, 1000);
+    pwm_set_chan_level(slice_num, PWM_CHAN_A, 2500);
     // Set initial B output high for three cycles before dropping
-    pwm_set_chan_level(slice_num, PWM_CHAN_B, 1000);
+    pwm_set_chan_level(slice_num, PWM_CHAN_B, 2500);
     // Set the PWM running
     pwm_set_enabled(slice_num, true);
 
@@ -56,23 +60,25 @@ void init_TB6612FNG(void){
 	gpio_put(AIN2, 1);
 	gpio_put(BIN1, 1);
 	gpio_put(BIN2, 1);
-	gpio_put(EN, 1);
+	gpio_put(EN, 0);
 }
 
-void set_pwm_duty(TB6612FNG_CH ch, uint16_t duty){
+void set_pwm_value(TB6612FNG_CH ch, uint16_t value){
+
+	if(WRAP_SETTING_VALUE < value){
+		return;
+	}
 
 	if(ch == A){
-		/*
-		if(duty != GPTW9.GTCCRB){
-			GPTW9.GTCCRB = duty;//TB6612FNGのA端子がPWMのB端子に接続されている
+		if(value != value_A){
+			pwm_set_chan_level(slice_num, PWM_CHAN_A, value);
+			value_A = value;
 		}
-		*/
 	} else {
-		/*
-		if(duty != GPTW9.GTCCRA){
-			GPTW9.GTCCRA = duty;//TB6612FNGのA端子がPWMのB端子に接続されている
+		if(value != value_B){
+			pwm_set_chan_level(slice_num, PWM_CHAN_B, value);
+			value_B = value;
 		}
-		*/
 	}
 }
 

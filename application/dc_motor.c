@@ -4,6 +4,8 @@
 #define SHORT_MAX 65535
 
 void init_dc_motor(void){
+	//init_TB6612FNG();
+
 	init_TB6612FNG();
 }
 
@@ -40,7 +42,7 @@ void set_speed_dc_motor(DC_MOTOR_CH ch, int32_t speed){
 			set_control(TB6612FNG_ch,CW);
 		}
 	}
-	set_pwm_duty(TB6612FNG_ch,(uint16_t)speed_int_abs);
+	set_pwm_value(TB6612FNG_ch,(uint16_t)speed_int_abs);
 }
 
 uint16_t get_dc_motor_pwm_resolution(void){

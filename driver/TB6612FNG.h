@@ -16,7 +16,7 @@ typedef enum{
 }TB6612FNG_CH;
 
 void init_TB6612FNG(void);
-void set_pwm_duty(TB6612FNG_CH ch, uint16_t duty);
+void set_pwm_value(TB6612FNG_CH ch, uint16_t value);
 void set_control(TB6612FNG_CH ch, TB6612FNG_CONTROL cw_ccw);
 uint16_t get_pwm_resolution(void);
 
