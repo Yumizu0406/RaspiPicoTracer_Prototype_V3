@@ -11,3 +11,6 @@ VSCodeでRaspberry Pi PicoのExtensionを使用します。
 Raspberry Pi財団が公開しているドキュメント「Getting started with Raspberry Pi Pico-series」の内容に沿って行ってください。
 
 cloneした後はImport Projectを行ってください。
+
+# 回路図
+![CircuitDiagram](https://github.com/Yumizu0406/RaspiPicoTracer_Prototype_V3/blob/main/document/circuit/RaspiPicoTracer_Prototype_V3.png)
