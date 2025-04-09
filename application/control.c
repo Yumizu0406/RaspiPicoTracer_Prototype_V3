@@ -7,16 +7,24 @@
 include
 ***********************************************************************************************************************/
 #include "control.h"
+#include "../driver/lineSensor.h"
+#include "dc_motor.h"
 
 /***********************************************************************************************************************
 define and const
 ***********************************************************************************************************************/
-
+#define TREAD_WIDTH_MM	90
+#define HALF_TREAD_WIDTH_MM TREAD_WIDTH_MM/2
 
 /***********************************************************************************************************************
 global
 ***********************************************************************************************************************/
 static control_status_t control_status;
+
+/***********************************************************************************************************************
+prototype
+***********************************************************************************************************************/
+void set_motor_control(int32_t speed,int16_t angular);
 
 /***********************************************************************************************************************
  * Function Name: init_control
@@ -37,6 +45,15 @@ void init_control(void){
  ***********************************************************************************************************************/
 void update_control(void){
 
+    int16_t line_center_deff = get_line_center_deff();
+
+    if(control_status == switching_to_run){
+        control_status = run;
+    } else if(control_status == run){
+
+    } else if(control_status == switching_to_stop){
+        control_status = stop;
+    }
 }
 
 /***********************************************************************************************************************
@@ -57,4 +74,21 @@ void set_control_status(control_status_t status){
  ***********************************************************************************************************************/
 control_status_t get_control_status(void){
     return control_status;
+}
+
+/***********************************************************************************************************************
+ * Function Name: set_motor_control
+ * Description  : モーターコントロール設定処理
+ * Arguments    : none
+ * Return Value : none
+ ***********************************************************************************************************************/
+void set_motor_control(int32_t speed,int16_t angular){
+	int control_speed_value_R;
+	int control_speed_value_L;
+
+	control_speed_value_R = speed + HALF_TREAD_WIDTH_MM * (int32_t)angular;
+	control_speed_value_L = speed - HALF_TREAD_WIDTH_MM * (int32_t)angular;;
+
+    set_speed_dc_motor(Right,control_speed_value_R);
+    set_speed_dc_motor(Left, control_speed_value_L);
 }
