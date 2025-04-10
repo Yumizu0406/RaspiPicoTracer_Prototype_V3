@@ -31,7 +31,8 @@ const uint LED_PIN = PICO_DEFAULT_LED_PIN;
  * Arguments    : none
  * Return Value : none
  ***********************************************************************************************************************/
-void init_cycle(void){
+void init_cycle(void)
+{
     gpio_init(LED_PIN);
     gpio_set_dir(LED_PIN, GPIO_OUT);
 
@@ -44,7 +45,8 @@ void init_cycle(void){
  * Arguments    : *t
  * Return Value : none
  ***********************************************************************************************************************/
-bool cycle_callback_1ms(__unused struct repeating_timer *t){
+bool cycle_callback_1ms(__unused struct repeating_timer *t)
+{
     if ( gpio_get(LED_PIN) != 0 ){
         gpio_put(LED_PIN, 0);
     }

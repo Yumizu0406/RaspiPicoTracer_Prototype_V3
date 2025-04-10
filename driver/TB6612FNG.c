@@ -31,7 +31,8 @@ static uint16_t value_A;
 static TB6612FNG_CONTROL control_state_B;
 static uint16_t value_B;
 
-void init_TB6612FNG(void){
+void init_TB6612FNG(void)
+{
 	gpio_set_function(PWM_A, GPIO_FUNC_PWM);
     gpio_set_function(PWM_B, GPIO_FUNC_PWM);
 	slice_num = pwm_gpio_to_slice_num(0);
@@ -63,8 +64,8 @@ void init_TB6612FNG(void){
 	gpio_put(EN, 1);
 }
 
-void set_pwm_value(TB6612FNG_CH ch, uint16_t value){
-
+void set_pwm_value(TB6612FNG_CH ch, uint16_t value)
+{
 	if(WRAP_SETTING_VALUE < value){
 		return;
 	}
@@ -82,7 +83,8 @@ void set_pwm_value(TB6612FNG_CH ch, uint16_t value){
 	}
 }
 
-void set_control(TB6612FNG_CH ch, TB6612FNG_CONTROL control){
+void set_control(TB6612FNG_CH ch, TB6612FNG_CONTROL control)
+{
 	if(ch == A){
 		if(control == control_state_A){
 			return;
@@ -122,6 +124,7 @@ void set_control(TB6612FNG_CH ch, TB6612FNG_CONTROL control){
 	}
 }
 
-uint16_t get_pwm_resolution(void){
+uint16_t get_pwm_resolution(void)
+{
 	return (WRAP_SETTING_VALUE + 1);
 }

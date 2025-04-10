@@ -34,7 +34,8 @@ prototype
  * Arguments    : none
  * Return Value : none
  ***********************************************************************************************************************/
-void init_lineSensor(void){
+void init_lineSensor(void)
+{
     gpio_init(LINE_SENSOR_0_PIN);
 	gpio_set_dir(LINE_SENSOR_0_PIN, GPIO_IN);
 
@@ -59,8 +60,8 @@ void init_lineSensor(void){
  * Arguments    : none
  * Return Value : none
  ***********************************************************************************************************************/
-void update_lineSensor(void){
-
+void update_lineSensor(void)
+{
     //黒黒黒白
     if((gpio_get(LINE_SENSOR_0_PIN) == false)
     && (gpio_get(LINE_SENSOR_1_PIN) == true)
@@ -132,6 +133,7 @@ void update_lineSensor(void){
  * Arguments    : none
  * Return Value : none
  ***********************************************************************************************************************/
-int16_t get_line_center_deff(void){
+int16_t get_line_center_deff(void)
+{
     return line_center_deff;
 }

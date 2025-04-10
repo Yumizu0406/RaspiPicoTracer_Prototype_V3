@@ -26,7 +26,7 @@ void menu_no_4(void);
 void menu_no_5(void);
 void menu_no_6(void);
 void menu_no_7(void);
-void disp_led_uint8(uint8_t value);
+void out_Indicators(uint8_t value);
 void exe_select_func(uint8_t select_func);
 
 static uint8_t now_led_disp_value;
@@ -69,7 +69,7 @@ int main()
                     menu_no = 0;
                 }
             }
-            disp_led_uint8(menu_no);
+            out_Indicators(menu_no);
 
             if(isSwStatus(SW_EXE, click)){
                 menu_status = exe_menu;
@@ -157,7 +157,7 @@ void menu_no_7(void)
     }
 }
 
-void disp_led_uint8(uint8_t value)
+void out_Indicators(uint8_t value)
 {
     const uint DISP_LED_ARRAY[4] = {DISP_LED_1_BIT_PIN, DISP_LED_2_BIT_PIN, DISP_LED_3_BIT_PIN, DISP_LED_4_BIT_PIN};
     uint8_t tmp_value;

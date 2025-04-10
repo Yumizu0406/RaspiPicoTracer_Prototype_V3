@@ -26,7 +26,8 @@ global
  * Arguments    : none
  * Return Value : none
  ***********************************************************************************************************************/
-void init_adc(void){
+void init_adc(void)
+{
     adc_init();
     adc_gpio_init(24);
 }
@@ -37,8 +38,8 @@ void init_adc(void){
  * Arguments    : ch
  * Return Value : A/D change result
  ***********************************************************************************************************************/
-uint16_t get_adc_value(uint8_t ch){
-
+uint16_t get_adc_value(uint8_t ch)
+{
     if(ch != 3)return 0;
 
     adc_select_input(ch);

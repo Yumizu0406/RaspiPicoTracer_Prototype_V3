@@ -39,7 +39,8 @@ void count_down_sw_timer(void);
  * Arguments    : none
  * Return Value : none
  ***********************************************************************************************************************/
-void init_sw(void){
+void init_sw(void)
+{
 	uint16_t sw_index;
 
 	gpio_init(NEXT_SW_PIN);

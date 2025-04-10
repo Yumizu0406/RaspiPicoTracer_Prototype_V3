@@ -3,10 +3,12 @@
 
 #define SHORT_MAX 65535
 
-void init_dc_motor(void){
+void init_dc_motor(void)
+{
 }
 
-void set_speed_dc_motor(DC_MOTOR_CH ch, int32_t speed){
+void set_speed_dc_motor(DC_MOTOR_CH ch, int32_t speed)
+{
 	int32_t speed_int_abs;
 	TB6612FNG_CH TB6612FNG_ch;
 
@@ -42,6 +44,7 @@ void set_speed_dc_motor(DC_MOTOR_CH ch, int32_t speed){
 	set_pwm_value(TB6612FNG_ch,(uint16_t)speed_int_abs);
 }
 
-uint16_t get_dc_motor_pwm_resolution(void){
+uint16_t get_dc_motor_pwm_resolution(void)
+{
 	return get_pwm_resolution();
 }
