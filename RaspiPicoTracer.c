@@ -46,14 +46,20 @@ void (*ptr_f[8])(void) = {
 
 int main()
 {
+    control_parameters_t parameter;
+
     now_led_disp_value = 8;
     menu_no = 0;
     menu_status = selecting_menu;
 
     stdio_init_all();
     init_control();
+
+    parameter.speed_at_straight = 1000;
+    parameter.p_gain_at_straight = 1.0;
+    set_control_parameter(trial_run, parameter);
+
     init_driver();
-    init_adc();
 
     while (true) {
         if(menu_status == selecting_menu){
@@ -75,7 +81,8 @@ int main()
     }
 }
 
-void init_driver(void){
+void init_driver(void)
+{
     gpio_init(DISP_LED_1_BIT_PIN);
     gpio_set_dir(DISP_LED_1_BIT_PIN, GPIO_OUT);
     gpio_init(DISP_LED_2_BIT_PIN);
@@ -87,57 +94,71 @@ void init_driver(void){
 
     init_TB6612FNG();
     init_sw();
+    init_adc();
     init_lineSensor();
     init_cycle();
 }
 
-void menu_no_0(void){
+void menu_no_0(void)
+{
     if(isSwStatus(SW_EXE, click)){
-
+        if(get_control_status() == stop){
+            set_control_status(switching_to_run);
+        } else {
+            set_control_status(stop);
+        }
     }
 }
 
-void menu_no_1(void){
+void menu_no_1(void)
+{
     printf("sensor = %d\n", get_line_center_deff());
     sleep_ms(500);
 }
 
-void menu_no_2(void){
+void menu_no_2(void)
+{
     printf("sensor = %d\n", get_adc_value(3));
     sleep_ms(500);
 }
 
-void menu_no_3(void){
+void menu_no_3(void)
+{
     if(isSwStatus(SW_EXE, click)){
     
     }
 }
 
-void menu_no_4(void){
+void menu_no_4(void)
+{
     if(isSwStatus(SW_EXE, click)){
 
     }
 }
 
-void menu_no_5(void){
+void menu_no_5(void)
+{
     if(isSwStatus(SW_EXE, click)){
 
     }
 }
 
-void menu_no_6(void){
+void menu_no_6(void)
+{
     if(isSwStatus(SW_EXE, click)){
 
     }
 }
 
-void menu_no_7(void){
+void menu_no_7(void)
+{
     if(isSwStatus(SW_EXE, click)){
 
     }
 }
 
-void disp_led_uint8(uint8_t value){
+void disp_led_uint8(uint8_t value)
+{
     const uint DISP_LED_ARRAY[4] = {DISP_LED_1_BIT_PIN, DISP_LED_2_BIT_PIN, DISP_LED_3_BIT_PIN, DISP_LED_4_BIT_PIN};
     uint8_t tmp_value;
     uint8_t bit_count;
@@ -158,6 +179,7 @@ void disp_led_uint8(uint8_t value){
     }
 }
 
-void exe_select_func(uint8_t select_func){
+void exe_select_func(uint8_t select_func)
+{
     (void)(*ptr_f[select_func])();
 }

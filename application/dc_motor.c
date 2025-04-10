@@ -30,13 +30,13 @@ void set_speed_dc_motor(DC_MOTOR_CH ch, int32_t speed){
 		if(ch == Right){
 			set_control(TB6612FNG_ch,CW);
 		} else {
-			set_control(TB6612FNG_ch,CCW);
+			set_control(TB6612FNG_ch,CW);
 		}
 	} else {
 		if(ch == Right){
 			set_control(TB6612FNG_ch,CCW);
 		} else {
-			set_control(TB6612FNG_ch,CW);
+			set_control(TB6612FNG_ch,CCW);
 		}
 	}
 	set_pwm_value(TB6612FNG_ch,(uint16_t)speed_int_abs);
