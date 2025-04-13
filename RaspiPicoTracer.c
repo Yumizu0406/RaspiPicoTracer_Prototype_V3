@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include <stdio.h>
 #include "pico/stdlib.h"
 #include "driver/cycle.h"
@@ -124,9 +125,20 @@ void menu_no_2(void)
 
 void menu_no_3(void)
 {
-    if(isSwStatus(SW_EXE, click)){
-    
+    bool *line_sensor_value;
+    uint8_t line_sensor_index;
+
+    line_sensor_value = get_line_sensor_row_value_pointer();
+
+    for(line_sensor_index = 0; line_sensor_index < 4; line_sensor_index++){
+        if(*line_sensor_value == true){
+            printf("1");
+        } else {
+            printf("0");
+        }
+        line_sensor_value++;
     }
+    printf("\n");
 }
 
 void menu_no_4(void)

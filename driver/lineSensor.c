@@ -22,6 +22,7 @@ const uint LINE_SENSOR_3_PIN = 7;
 global
 ***********************************************************************************************************************/
 int16_t line_center_deff;
+bool line_sensor_row_value[4];
 
 /***********************************************************************************************************************
 prototype
@@ -49,6 +50,10 @@ void init_lineSensor(void)
 	gpio_set_dir(LINE_SENSOR_3_PIN, GPIO_IN);
 
     line_center_deff = 0;
+    line_sensor_row_value[0] = false;
+    line_sensor_row_value[1] = false;
+    line_sensor_row_value[2] = false;
+    line_sensor_row_value[3] = false;
 }
 
 /***********************************************************************************************************************
@@ -62,67 +67,72 @@ void init_lineSensor(void)
  ***********************************************************************************************************************/
 void update_lineSensor(void)
 {
+    line_sensor_row_value[0] = gpio_get(LINE_SENSOR_0_PIN);
+    line_sensor_row_value[1] = gpio_get(LINE_SENSOR_1_PIN);
+    line_sensor_row_value[2] = gpio_get(LINE_SENSOR_2_PIN);
+    line_sensor_row_value[3] = gpio_get(LINE_SENSOR_3_PIN);
+
     //黒黒黒白
-    if((gpio_get(LINE_SENSOR_0_PIN) == false)
-    && (gpio_get(LINE_SENSOR_1_PIN) == true)
-    && (gpio_get(LINE_SENSOR_2_PIN) == true)
-    && (gpio_get(LINE_SENSOR_3_PIN) == true)){
+    if((line_sensor_row_value[0] == false)
+    && (line_sensor_row_value[1] == true)
+    && (line_sensor_row_value[2] == true)
+    && (line_sensor_row_value[3] == true)){
         line_center_deff = 3;
     }
 
     //黒黒白白
-    if((gpio_get(LINE_SENSOR_0_PIN) == false)
-    && (gpio_get(LINE_SENSOR_1_PIN) == false)
-    && (gpio_get(LINE_SENSOR_2_PIN) == true)
-    && (gpio_get(LINE_SENSOR_3_PIN) == true)){
+    if((line_sensor_row_value[0] == false)
+    && (line_sensor_row_value[1] == false)
+    && (line_sensor_row_value[2] == true)
+    && (line_sensor_row_value[3] == true)){
         line_center_deff = 2;
     }
 
     //黒黒白黒
-    if((gpio_get(LINE_SENSOR_0_PIN) == true)
-    && (gpio_get(LINE_SENSOR_1_PIN) == false)
-    && (gpio_get(LINE_SENSOR_2_PIN) == true)
-    && (gpio_get(LINE_SENSOR_3_PIN) == true)){
+    if((line_sensor_row_value[0] == true)
+    && (line_sensor_row_value[1] == false)
+    && (line_sensor_row_value[2] == true)
+    && (line_sensor_row_value[3] == true)){
         line_center_deff = 1;
     }
 
     //黒白白黒
-    if((gpio_get(LINE_SENSOR_0_PIN) == true)
-    && (gpio_get(LINE_SENSOR_1_PIN) == false)
-    && (gpio_get(LINE_SENSOR_2_PIN) == false)
-    && (gpio_get(LINE_SENSOR_3_PIN) == true)){
+    if((line_sensor_row_value[0] == true)
+    && (line_sensor_row_value[1] == false)
+    && (line_sensor_row_value[2] == false)
+    && (line_sensor_row_value[3] == true)){
         line_center_deff = 0;
     }
 
     //黒白黒黒
-    if((gpio_get(LINE_SENSOR_0_PIN) == true)
-    && (gpio_get(LINE_SENSOR_1_PIN) == true)
-    && (gpio_get(LINE_SENSOR_2_PIN) == false)
-    && (gpio_get(LINE_SENSOR_3_PIN) == true)){
+    if((line_sensor_row_value[0] == true)
+    && (line_sensor_row_value[1] == true)
+    && (line_sensor_row_value[2] == false)
+    && (line_sensor_row_value[3] == true)){
         line_center_deff = -1;
     }
 
     //白白黒黒
-    if((gpio_get(LINE_SENSOR_0_PIN) == true)
-    && (gpio_get(LINE_SENSOR_1_PIN) == true)
-    && (gpio_get(LINE_SENSOR_2_PIN) == false)
-    && (gpio_get(LINE_SENSOR_3_PIN) == false)){
+    if((line_sensor_row_value[0] == true)
+    && (line_sensor_row_value[1] == true)
+    && (line_sensor_row_value[2] == false)
+    && (line_sensor_row_value[3] == false)){
         line_center_deff = -2;
     }
 
     //白黒黒黒
-    if((gpio_get(LINE_SENSOR_0_PIN) == true)
-    && (gpio_get(LINE_SENSOR_1_PIN) == true)
-    && (gpio_get(LINE_SENSOR_2_PIN) == true)
-    && (gpio_get(LINE_SENSOR_3_PIN) == false)){
+    if((line_sensor_row_value[0] == true)
+    && (line_sensor_row_value[1] == true)
+    && (line_sensor_row_value[2] == true)
+    && (line_sensor_row_value[3] == false)){
         line_center_deff = -3;
     }
 
     //白白白白
-    if((gpio_get(LINE_SENSOR_0_PIN) == false)
-    && (gpio_get(LINE_SENSOR_1_PIN) == false)
-    && (gpio_get(LINE_SENSOR_2_PIN) == false)
-    && (gpio_get(LINE_SENSOR_3_PIN) == false)){
+    if((line_sensor_row_value[0] == false)
+    && (line_sensor_row_value[1] == false)
+    && (line_sensor_row_value[2] == false)
+    && (line_sensor_row_value[3] == false)){
         line_center_deff = 0;
     }
 }
@@ -136,4 +146,15 @@ void update_lineSensor(void)
 int16_t get_line_center_deff(void)
 {
     return line_center_deff;
+}
+
+/***********************************************************************************************************************
+ * Function Name: get_line_sensor_row_value_pointer
+ * Description  : ラインセンサ値のポインタ取得処理
+ * Arguments    : none
+ * Return Value : none
+ ***********************************************************************************************************************/
+bool* get_line_sensor_row_value_pointer(void)
+{
+    return &line_sensor_row_value[0];
 }

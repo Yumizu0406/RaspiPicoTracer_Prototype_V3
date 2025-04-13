@@ -21,5 +21,6 @@ prototype
 void init_lineSensor(void);
 void update_lineSensor(void);
 int16_t get_line_center_deff(void);
+bool* get_line_sensor_row_value_pointer(void);
 
 #endif
