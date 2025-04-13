@@ -3,10 +3,23 @@
 
 #define SHORT_MAX 65535
 
+/***********************************************************************************************************************
+ * Function Name: init_dc_motor
+ * Description  : dc_motor初期化処理
+ * Arguments    : none
+ * Return Value : none
+ ***********************************************************************************************************************/
 void init_dc_motor(void)
 {
 }
 
+/***********************************************************************************************************************
+ * Function Name: set_speed_dc_motor
+ * Description  : モーター速度設定処理
+ * Arguments    : ch モーターのチャンネル
+				  speed 速度
+ * Return Value : none
+ ***********************************************************************************************************************/
 void set_speed_dc_motor(DC_MOTOR_CH ch, int32_t speed)
 {
 	int32_t speed_int_abs;
@@ -44,6 +57,12 @@ void set_speed_dc_motor(DC_MOTOR_CH ch, int32_t speed)
 	set_pwm_value(TB6612FNG_ch,(uint16_t)speed_int_abs);
 }
 
+/***********************************************************************************************************************
+ * Function Name: get_dc_motor_pwm_resolution
+ * Description  : PWM分解能取得処理
+ * Arguments    : none
+ * Return Value : 分解能
+ ***********************************************************************************************************************/
 uint16_t get_dc_motor_pwm_resolution(void)
 {
 	return get_pwm_resolution();
