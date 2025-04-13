@@ -14,3 +14,12 @@ cloneした後はImport Projectを行ってください。
 
 # 回路図
 ![CircuitDiagram](https://github.com/Yumizu0406/RaspiPicoTracer_Prototype_V3/blob/main/document/circuit/RaspiPicoTracer_Prototype_V3.png)
+
+# 部品表
+
+| 名称 | メーカー | 値段 | 個数 | 備考 |
+| ---- | ---- | ---- | ---- | ---- |
+| ダブルギヤボックス（左右独立４速タイプ） | 株式会社タミヤ | 924 | 1 | - |
+| トラックタイヤセット （36mm径） | 株式会社タミヤ | 396 | 1 | - |
+| 電池ボックス 単3×4本 リード線・フタ・スイッチ付 | COMFORTABLE ELECTRONIC CO., LTD(COMF) | 160 | 1 | - |
+| 耐熱電子ワイヤー 黒色 20m 導体外径0.54mm(AWG24相当) | 住友電気工業株式会社 | 600 | 1 | 15cmのものを4つ利用 |
