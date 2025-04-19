@@ -13,10 +13,10 @@ include
 /***********************************************************************************************************************
 define and const
 ***********************************************************************************************************************/
-const uint LINE_SENSOR_0_PIN = 4;
-const uint LINE_SENSOR_1_PIN = 5;
-const uint LINE_SENSOR_2_PIN = 6;
-const uint LINE_SENSOR_3_PIN = 7;
+const uint LINE_SENSOR_0_PIN = 3;
+const uint LINE_SENSOR_1_PIN = 4;
+const uint LINE_SENSOR_2_PIN = 5;
+const uint LINE_SENSOR_3_PIN = 6;
 
 /***********************************************************************************************************************
 global
