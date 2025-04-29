@@ -7,6 +7,6 @@ set(CMAKE_CXX_STANDARD 17)
 
 pico_sdk_init()
 
-add_library(driver STATIC cycle.c sw.c lineSensor.c TB6612FNG.c adchange.c)
+add_library(driver STATIC indicators.c cycle.c sw.c lineSensor.c TB6612FNG.c adchange.c)
 target_link_libraries(driver pico_stdlib hardware_pwm)
 target_link_libraries(driver pico_stdlib hardware_adc)

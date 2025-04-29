@@ -1,17 +1,13 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "pico/stdlib.h"
+#include "driver/indicators.h"
 #include "driver/cycle.h"
 #include "driver/sw.h"
 #include "driver/lineSensor.h"
 #include "driver/adchange.h"
 #include "driver/TB6612FNG.h"
 #include "application/control.h"
-
-const uint DISP_LED_1_BIT_PIN = 8;
-const uint DISP_LED_2_BIT_PIN = 9;
-const uint DISP_LED_3_BIT_PIN = 10;
-const uint DISP_LED_4_BIT_PIN = 11;
 
 typedef enum{
     selecting_menu = 0,
@@ -27,10 +23,8 @@ void menu_no_4(void);
 void menu_no_5(void);
 void menu_no_6(void);
 void menu_no_7(void);
-void out_Indicators(uint8_t value);
 void exe_select_func(uint8_t select_func);
 
-static uint8_t now_led_disp_value;
 static uint8_t menu_no;
 static menu_status_t menu_status;
 
@@ -49,7 +43,6 @@ int main()
 {
     control_parameters_t parameter;
 
-    now_led_disp_value = 8;
     menu_no = 0;
     menu_status = selecting_menu;
 
@@ -70,7 +63,7 @@ int main()
                     menu_no = 0;
                 }
             }
-            out_Indicators(menu_no);
+            out_indicators(menu_no);
 
             if(isSwStatus(SW_EXE, click)){
                 menu_status = exe_menu;
@@ -84,15 +77,7 @@ int main()
 
 void init_driver(void)
 {
-    gpio_init(DISP_LED_1_BIT_PIN);
-    gpio_set_dir(DISP_LED_1_BIT_PIN, GPIO_OUT);
-    gpio_init(DISP_LED_2_BIT_PIN);
-    gpio_set_dir(DISP_LED_2_BIT_PIN, GPIO_OUT);
-    gpio_init(DISP_LED_3_BIT_PIN);
-    gpio_set_dir(DISP_LED_3_BIT_PIN, GPIO_OUT);
-    gpio_init(DISP_LED_4_BIT_PIN);
-    gpio_set_dir(DISP_LED_4_BIT_PIN, GPIO_OUT);
-
+    init_indicators();
     init_TB6612FNG();
     init_sw();
     init_adc();
@@ -166,28 +151,6 @@ void menu_no_7(void)
 {
     if(isSwStatus(SW_EXE, click)){
 
-    }
-}
-
-void out_Indicators(uint8_t value)
-{
-    const uint DISP_LED_ARRAY[4] = {DISP_LED_1_BIT_PIN, DISP_LED_2_BIT_PIN, DISP_LED_3_BIT_PIN, DISP_LED_4_BIT_PIN};
-    uint8_t tmp_value;
-    uint8_t bit_count;
-    tmp_value = value & 0x0f;
-
-    if(now_led_disp_value == value){
-        return;
-    }
-    now_led_disp_value = value;
-
-    for(bit_count = 0; bit_count < 4; bit_count++){
-        if((tmp_value & 0x01) != 0x00){
-            gpio_put(DISP_LED_ARRAY[bit_count], false);
-        } else {
-            gpio_put(DISP_LED_ARRAY[bit_count], true);
-        }
-        tmp_value = tmp_value >> 1;
     }
 }
 
