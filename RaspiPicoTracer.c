@@ -57,6 +57,7 @@ int main()
 
     while (true) {
         if(menu_status == selecting_menu){
+            set_Raspberry_Pi_LED_mode(led_mode_switching);
             if(isSwStatus(SW_NEXT, click)){
                 menu_no++;
                 if(menu_no >= 8){
@@ -70,6 +71,7 @@ int main()
             }
 
         } else {
+            set_Raspberry_Pi_LED_mode(led_mode_on);
             exe_select_func(menu_no);
         }
     }

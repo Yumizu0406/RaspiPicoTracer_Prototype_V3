@@ -9,10 +9,14 @@ include
 ***********************************************************************************************************************/
 #include "indicators.h"
 #include "hardware/gpio.h"
+#include <stdint.h>
 
 /***********************************************************************************************************************
 define and const
 ***********************************************************************************************************************/
+#define SWITCHING_TIME  500u
+const uint LED_PIN = PICO_DEFAULT_LED_PIN;
+
 const uint DISP_LED_1_BIT_PIN = 8;
 const uint DISP_LED_2_BIT_PIN = 9;
 const uint DISP_LED_3_BIT_PIN = 10;
@@ -22,6 +26,8 @@ const uint DISP_LED_4_BIT_PIN = 11;
 global
 ***********************************************************************************************************************/
 static uint8_t now_led_disp_value;
+static uint16_t led_switching_timer;
+static led_mode_t Raspberry_Pi_LED_mode;
 
 /***********************************************************************************************************************
 prototype
@@ -35,6 +41,11 @@ prototype
  ***********************************************************************************************************************/
 void init_indicators(void)
 {
+    Raspberry_Pi_LED_mode = led_mode_on;
+    led_switching_timer = 0;
+    gpio_init(LED_PIN);
+    gpio_set_dir(LED_PIN, GPIO_OUT);
+
     now_led_disp_value = 8;
     gpio_init(DISP_LED_1_BIT_PIN);
     gpio_set_dir(DISP_LED_1_BIT_PIN, GPIO_OUT);
@@ -72,5 +83,43 @@ void out_indicators(uint8_t value)
             gpio_put(DISP_LED_ARRAY[bit_count], true);
         }
         tmp_value = tmp_value >> 1;
+    }
+}
+
+/***********************************************************************************************************************
+ * Function Name: set_Raspberry_Pi_LED_mode
+ * Description  : Raspberry Pi LEDモード設定処理
+ * Arguments    : mode Raspberry Pi LEDモード
+ * Return Value : none
+ ***********************************************************************************************************************/
+void set_Raspberry_Pi_LED_mode(led_mode_t mode)
+{
+    Raspberry_Pi_LED_mode = mode;
+}
+
+/***********************************************************************************************************************
+ * Function Name: update_Raspberry_Pi_LED
+ * Description  : Raspberry Pi LED 処理更新
+ * Arguments    : none
+ * Return Value : none
+ ***********************************************************************************************************************/
+void update_Raspberry_Pi_LED(void)
+{
+    if(Raspberry_Pi_LED_mode == led_mode_off){
+        gpio_put(LED_PIN, 0);
+    } else if(Raspberry_Pi_LED_mode == led_mode_on){
+        gpio_put(LED_PIN, 1);
+    } else if(Raspberry_Pi_LED_mode == led_mode_switching){ 
+        if(led_switching_timer == 0){
+            if ( gpio_get(LED_PIN) != 0 ){
+                gpio_put(LED_PIN, 0);
+            }
+            else{
+                gpio_put(LED_PIN, 1);
+            }
+            led_switching_timer = SWITCHING_TIME;
+        } else {
+            led_switching_timer--;
+        }
     }
 }
