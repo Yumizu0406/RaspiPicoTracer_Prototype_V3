@@ -6,6 +6,18 @@ RaspiPicoTracerは白線の上をたどって走るロボットであり、
 
 https://www.ntf.or.jp/?page_id=68
 
+# スペック
+| 項目 | 詳細 |
+| ---- | ---- |
+| サイズ | 幅:150mm  長さ:148mm  高さ:46mm |
+| 重さ | 約??g |
+| 電源 | 単四電池4本 |
+| モーター | FA-130 |
+| モータードライバ | TB6612 |
+| CPU | RP2350 |
+| ラインセンサ | LBR-127HLD×4 |
+| ホイール | 径:36mm 幅:16mm |
+
 # 開発環境について
 VSCodeでRaspberry Pi PicoのExtensionを使用します。
 Raspberry Pi財団が公開しているドキュメント「Getting started with Raspberry Pi Pico-series」の内容に沿って行ってください。
