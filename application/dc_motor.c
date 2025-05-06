@@ -26,9 +26,9 @@ void set_speed_dc_motor(DC_MOTOR_CH ch, int32_t speed)
 	TB6612FNG_CH TB6612FNG_ch;
 
 	if(ch == Right){
-		TB6612FNG_ch = A;
-	} else {
 		TB6612FNG_ch = B;
+	} else {
+		TB6612FNG_ch = A;
 	}
 
 	if(speed < 0){
