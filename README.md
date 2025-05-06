@@ -61,3 +61,8 @@ cloneした後はImport Projectを行ってください。
 | 精密作業用ニッパー | - |
 | ＋ドライバー | サイズは2番 |
 | ワイヤストリッパー | あると嬉しい<br>なくてもOK |
+
+<br>
+
+モーターとの接続について以下の画像のように接続してください。
+![ConnectToMotor](https://github.com/Yumizu0406/RaspiPicoTracer_Prototype_V3/blob/main/document/figure/PXL_20250506_041316845.png)
