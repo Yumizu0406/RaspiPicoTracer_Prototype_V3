@@ -73,67 +73,59 @@ void update_lineSensor(void)
     line_sensor_row_value[3] = gpio_get(LINE_SENSOR_3_PIN);
 
     //黒黒黒白
-    if((line_sensor_row_value[0] == false)
-    && (line_sensor_row_value[1] == true)
-    && (line_sensor_row_value[2] == true)
-    && (line_sensor_row_value[3] == true)){
+    if((line_sensor_row_value[0] == true)
+    && (line_sensor_row_value[1] == false)
+    && (line_sensor_row_value[2] == false)
+    && (line_sensor_row_value[3] == false)){
         line_center_deff = 3;
     }
 
     //黒黒白白
-    if((line_sensor_row_value[0] == false)
-    && (line_sensor_row_value[1] == false)
-    && (line_sensor_row_value[2] == true)
-    && (line_sensor_row_value[3] == true)){
+    if((line_sensor_row_value[0] == true)
+    && (line_sensor_row_value[1] == true)
+    && (line_sensor_row_value[2] == false)
+    && (line_sensor_row_value[3] == false)){
         line_center_deff = 2;
     }
 
-    //黒黒白黒
+    //黒白白白
     if((line_sensor_row_value[0] == true)
-    && (line_sensor_row_value[1] == false)
+    && (line_sensor_row_value[1] == true)
     && (line_sensor_row_value[2] == true)
-    && (line_sensor_row_value[3] == true)){
+    && (line_sensor_row_value[3] == false)){
         line_center_deff = 1;
     }
 
-    //黒白白黒
+    //白白白白
     if((line_sensor_row_value[0] == true)
-    && (line_sensor_row_value[1] == false)
-    && (line_sensor_row_value[2] == false)
+    && (line_sensor_row_value[1] == true)
+    && (line_sensor_row_value[2] == true)
     && (line_sensor_row_value[3] == true)){
         line_center_deff = 0;
     }
 
-    //黒白黒黒
-    if((line_sensor_row_value[0] == true)
+    //白白白黒
+    if((line_sensor_row_value[0] == false)
     && (line_sensor_row_value[1] == true)
-    && (line_sensor_row_value[2] == false)
+    && (line_sensor_row_value[2] == true)
     && (line_sensor_row_value[3] == true)){
         line_center_deff = -1;
     }
 
     //白白黒黒
-    if((line_sensor_row_value[0] == true)
-    && (line_sensor_row_value[1] == true)
-    && (line_sensor_row_value[2] == false)
-    && (line_sensor_row_value[3] == false)){
+    if((line_sensor_row_value[0] == false)
+    && (line_sensor_row_value[1] == false)
+    && (line_sensor_row_value[2] == true)
+    && (line_sensor_row_value[3] == true)){
         line_center_deff = -2;
     }
 
     //白黒黒黒
-    if((line_sensor_row_value[0] == true)
-    && (line_sensor_row_value[1] == true)
-    && (line_sensor_row_value[2] == true)
-    && (line_sensor_row_value[3] == false)){
-        line_center_deff = -3;
-    }
-
-    //白白白白
     if((line_sensor_row_value[0] == false)
     && (line_sensor_row_value[1] == false)
     && (line_sensor_row_value[2] == false)
-    && (line_sensor_row_value[3] == false)){
-        line_center_deff = 0;
+    && (line_sensor_row_value[3] == true)){
+        line_center_deff = -3;
     }
 }
 
